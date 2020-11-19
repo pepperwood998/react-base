@@ -1,6 +1,5 @@
 import React from "react";
 import HomePage from "./pages/home";
-
 import "./styles/global.scss";
 
 function App() {
