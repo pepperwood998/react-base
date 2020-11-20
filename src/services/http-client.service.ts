@@ -1,6 +1,12 @@
-import { Subscriber, Observer, Observable } from "rxjs";
+import { Subscriber, Observer, Observable, of } from "rxjs";
+import { ajax } from "rxjs/ajax";
+import { catchError, map } from "rxjs/operators";
 import Axios, { CancelTokenSource } from "axios";
-import { KeyValuePair, HttpHeader } from "../interfaces/common.interface";
+import {
+  KeyValuePair,
+  HttpHeader,
+  HttpRequestOptions
+} from "../interfaces/common.interface";
 import ENV from "../utils/envinronment";
 
 export default class HttpClient {
@@ -11,13 +17,39 @@ export default class HttpClient {
     queryParams?: KeyValuePair,
     headers?: HttpHeader
   ): Observable<any> {
-    return Observable.create((observer: Observer<any>) => {
-      return new AxiosSubscriber(observer).get(
-        this.resolveUri(uri),
-        queryParams,
-        headers
-      );
-    });
+    return this.request(uri, "GET", { queryParams, headers });
+
+    // return Observable.create((observer: Observer<any>) => {
+    //   return new AxiosSubscriber(observer).get(
+    //     this.resolveUri(uri),
+    //     queryParams,
+    //     headers
+    //   );
+    // });
+  }
+
+  static request(
+    uri: string,
+    method = "GET",
+    options?: HttpRequestOptions
+  ): Observable<any> {
+    const url = new URL(this.resolveUri(uri));
+    if (options?.queryParams) {
+      url.search = new URLSearchParams(options.queryParams).toString();
+    }
+
+    return ajax({
+      url: url.toString(),
+      method,
+      headers: options?.headers,
+      body: options?.body
+    }).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      }),
+      map((ajaxResponse) => ajaxResponse?.response)
+    );
   }
 
   private static resolveUri(uri: string): string {
@@ -28,6 +60,11 @@ export default class HttpClient {
   }
 }
 
+/**
+ * @deprecated
+ * TODO: Wait for RxJS 'ajax' usability, then remove Axios
+ *
+ */
 export class AxiosSubscriber extends Subscriber<any> {
   private isCompleted = false;
   private cancelTokenSource: CancelTokenSource;
