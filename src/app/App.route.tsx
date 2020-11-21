@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import HomePage from "./pages/home";
-import AddPage from "./pages/add";
+import HomePage from "../pages/home";
+import AddPage from "../pages/add";
 
 export default function AppRouting() {
   return (
@@ -9,7 +9,7 @@ export default function AppRouting() {
       <Route path={["/", "/home"]} exact>
         <HomePage></HomePage>
       </Route>
-      <Route path="/add">
+      <Route path={["/add"]}>
         <AddPage></AddPage>
       </Route>
     </React.Fragment>
