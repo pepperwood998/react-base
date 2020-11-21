@@ -1,3 +1,3 @@
-import LandingLayout from "./LandingLayout";
+import LandingLayout from "./Landing.layout";
 
 export default LandingLayout;

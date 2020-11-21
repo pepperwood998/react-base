@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import HomeBox from "./components/HomeBox";
+import HomeBox from "./components/HomeBox.component";
 import TempRepository from "../../repositories/temp.repository";
 import useEffectSkip from "../../react/hooks/useEffectSkip";
 import "./styles.scss";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [id, setId] = useState(1);
@@ -22,7 +23,7 @@ function HomePage() {
   };
 
   return (
-    <div className="text-center">
+    <div className="flex flex-col items-center">
       <div className="flex text-3xl items-center">
         <span>Home</span>
         <div className="pl-2">
@@ -35,6 +36,7 @@ function HomePage() {
       >
         Test RxJS
       </button>
+      <Link to="/launcher/add">Go to Add</Link>
     </div>
   );
 }
