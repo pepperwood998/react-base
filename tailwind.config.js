@@ -5,7 +5,11 @@ module.exports = {
   },
   purge: [],
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        "sans-serif": ["sans-serif"]
+      }
+    }
   },
   variants: {},
   plugins: []
