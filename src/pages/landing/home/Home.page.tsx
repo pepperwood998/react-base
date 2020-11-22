@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HomeBox from "./components/HomeBox.component";
-import TempRepository from "../../repositories/temp.repository";
-import useEffectSkip from "../../react/hooks/useEffectSkip";
+import TempRepository from "../../../repositories/temp.repository";
+import useEffectSkip from "../../../react/hooks/useEffectSkip";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 
